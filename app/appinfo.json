@@ -1,0 +1,23 @@
+{
+  "id": "com.shashvat.launcher",
+  "version": "0.2.2",
+  "vendor": "shashvat",
+  "type": "web",
+  "main": "index.html",
+  "title": "Lumina",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "iconColor": "#FFB454",
+  "bgColor": "#0B0E14",
+  "splashBackground": "splashBackground.png",
+  "resolution": "1920x1080",
+  "checkUpdateOnLaunch": false,
+  "disableBackHistoryAPI": true,
+  "transparent": false,
+  "accessibility": {
+    "supportsAudioGuidance": false
+  },
+  "vendorExtension": {
+    "allowCrossDomain": true
+  }
+}

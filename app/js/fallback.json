@@ -1,0 +1,841 @@
+{
+ "rails": [
+  {
+   "name": "Popular Movies",
+   "type": "movie",
+   "items": [
+    {
+     "id": "tt22084616",
+     "type": "movie",
+     "name": "Spider-Man: Brand New Day",
+     "releaseInfo": "2026",
+     "imdbRating": "8.0",
+     "genres": [
+      "Action",
+      "Adventure"
+     ],
+     "description": "A forgotten Peter Parker lives alone as a full-time Spider-Man until mounting pressure triggers a dangerous change and a powerful new enemy emerges.",
+     "poster": "https://images.metahub.space/poster/small/tt22084616/img",
+     "background": "https://images.metahub.space/background/medium/tt22084616/img"
+    },
+    {
+     "id": "tt6933238",
+     "type": "movie",
+     "name": "Unabomber",
+     "releaseInfo": "2026",
+     "imdbRating": "6.2",
+     "genres": [
+      "Biography",
+      "Crime",
+      "Drama"
+     ],
+     "description": "A Harvard student becomes the Unabomber after psychological experiments. Years later, an FBI agent's pursuit reveals how his past shaped his deadly campaign that killed 3 and injured 23 from 1978-1995.",
+     "poster": "https://images.metahub.space/poster/small/tt6933238/img",
+     "background": "https://images.metahub.space/background/medium/tt6933238/img"
+    },
+    {
+     "id": "tt15047880",
+     "type": "movie",
+     "name": "Disclosure Day",
+     "releaseInfo": "2026",
+     "imdbRating": "6.4",
+     "genres": [
+      "Action",
+      "Mystery",
+      "Sci-Fi"
+     ],
+     "description": "If you found out we weren't alone, if someone showed you, proved it to you, would that frighten you?",
+     "poster": "https://images.metahub.space/poster/small/tt15047880/img",
+     "background": "https://images.metahub.space/background/medium/tt15047880/img"
+    },
+    {
+     "id": "tt37287335",
+     "type": "movie",
+     "name": "Obsession",
+     "releaseInfo": "2026",
+     "imdbRating": "7.8",
+     "genres": [
+      "Horror",
+      "Thriller"
+     ],
+     "description": "After breaking the mysterious \"One Wish Willow\" to win his crush's heart, a hopeless romantic finds himself getting exactly what he asked for but soon discovers that some desires come at a dark, sinister price.",
+     "poster": "https://images.metahub.space/poster/small/tt37287335/img",
+     "background": "https://images.metahub.space/background/medium/tt37287335/img"
+    },
+    {
+     "id": "tt26657236",
+     "type": "movie",
+     "name": "Backrooms",
+     "releaseInfo": "2026",
+     "imdbRating": "6.7",
+     "genres": [
+      "Horror",
+      "Sci-Fi",
+      "Thriller"
+     ],
+     "description": "Clark, an angry architect, chases the source of impossible power failures when a glowing gap opens in his basement, but the yellow maze beyond it threatens his sanity, his friends, and Mary.",
+     "poster": "https://images.metahub.space/poster/small/tt26657236/img",
+     "background": "https://images.metahub.space/background/medium/tt26657236/img"
+    },
+    {
+     "id": "tt36983905",
+     "type": "movie",
+     "name": "The Uprising",
+     "releaseInfo": "2026",
+     "imdbRating": "",
+     "genres": [
+      "Action",
+      "Drama",
+      "History"
+     ],
+     "description": "Based on the true story of the uprising that inspired the legend of Robin Hood, Andrew Garfield stars as the leader of a rebellion against the tyranny of King Richard II in a fight for justice.",
+     "poster": "https://images.metahub.space/poster/small/tt36983905/img",
+     "background": "https://images.metahub.space/background/medium/tt36983905/img"
+    },
+    {
+     "id": "tt32393988",
+     "type": "movie",
+     "name": "Insidious: Out of the Further",
+     "releaseInfo": "2026",
+     "imdbRating": "6.2",
+     "genres": [
+      "Horror",
+      "Mystery",
+      "Thriller"
+     ],
+     "description": "Gemma, a young mother raising her daughter in the house she grew up in, discovers she can travel into The Further, where she possesses an ability to bring what lives there back to the real world.",
+     "poster": "https://images.metahub.space/poster/small/tt32393988/img",
+     "background": "https://images.metahub.space/background/medium/tt32393988/img"
+    },
+    {
+     "id": "tt22526100",
+     "type": "movie",
+     "name": "The Love Hypothesis",
+     "releaseInfo": "2026",
+     "imdbRating": "",
+     "genres": [
+      "Comedy",
+      "Romance"
+     ],
+     "description": "After an impulsive kiss, two scientists end up in a fake relationship, testing their theories about love and each other.",
+     "poster": "https://images.metahub.space/poster/small/tt22526100/img",
+     "background": "https://images.metahub.space/background/medium/tt22526100/img"
+    },
+    {
+     "id": "tt36064406",
+     "type": "movie",
+     "name": "Coven Academy",
+     "releaseInfo": "2026\u2013",
+     "imdbRating": "",
+     "genres": [
+      "Comedy",
+      "Drama",
+      "Family"
+     ],
+     "description": "Teen witch apprentices band together to defend New Orleans against an approaching dark force.",
+     "poster": "https://images.metahub.space/poster/small/tt36064406/img",
+     "background": "https://images.metahub.space/background/medium/tt36064406/img"
+    },
+    {
+     "id": "tt27543632",
+     "type": "movie",
+     "name": "The Housemaid",
+     "releaseInfo": "2025",
+     "imdbRating": "6.7",
+     "genres": [
+      "Drama",
+      "Mystery",
+      "Thriller"
+     ],
+     "description": "Millie a struggling young woman becomes live-in maid for a wealthy couple Nina and Andrew. She enters a mansion of secrets, manipulation, and escalating psychological games that pull her into a dangerous relationship dynamic.",
+     "poster": "https://images.metahub.space/poster/small/tt27543632/img",
+     "background": "https://images.metahub.space/background/medium/tt27543632/img"
+    },
+    {
+     "id": "tt0074285",
+     "type": "movie",
+     "name": "Carrie",
+     "releaseInfo": "1976",
+     "imdbRating": "7.4",
+     "genres": [
+      "Horror"
+     ],
+     "description": "A social misfit with psychic powers turns prom night into Hell on Earth.",
+     "poster": "https://images.metahub.space/poster/small/tt0074285/img",
+     "background": "https://images.metahub.space/background/medium/tt0074285/img"
+    },
+    {
+     "id": "tt27165187",
+     "type": "movie",
+     "name": "The End of Oak Street",
+     "releaseInfo": "2026",
+     "imdbRating": "6.5",
+     "genres": [
+      "Action",
+      "Adventure",
+      "Mystery"
+     ],
+     "description": "The Platt family bands together to navigate their new surroundings after a cosmic event transports their suburban neighborhood to someplace unknown.",
+     "poster": "https://images.metahub.space/poster/small/tt27165187/img",
+     "background": "https://images.metahub.space/background/medium/tt27165187/img"
+    },
+    {
+     "id": "tt36429458",
+     "type": "movie",
+     "name": "Doing Life",
+     "releaseInfo": "2026",
+     "imdbRating": "",
+     "genres": [
+      "Drama"
+     ],
+     "description": "A single mother fighting to survive and a reformed ex-con with untapped talent find in each other an unlikely second chance.",
+     "poster": "https://images.metahub.space/poster/small/tt36429458/img",
+     "background": "https://images.metahub.space/background/medium/tt36429458/img"
+    },
+    {
+     "id": "tt12042730",
+     "type": "movie",
+     "name": "Project Hail Mary",
+     "releaseInfo": "2026",
+     "imdbRating": "8.2",
+     "genres": [
+      "Adventure",
+      "Comedy",
+      "Sci-Fi"
+     ],
+     "description": "A science teacher wakes up alone on a spaceship. As his memory returns, he uncovers a mission to stop a mysterious substance killing Earth's sun, and realizes that an unexpected friendship may be the key.",
+     "poster": "https://images.metahub.space/poster/small/tt12042730/img",
+     "background": "https://images.metahub.space/background/medium/tt12042730/img"
+    }
+   ]
+  },
+  {
+   "name": "Popular Series",
+   "type": "series",
+   "items": [
+    {
+     "id": "tt11540908",
+     "type": "series",
+     "name": "Carrie",
+     "releaseInfo": "2026\u2013",
+     "imdbRating": "7.8",
+     "genres": [
+      "Drama",
+      "Horror"
+     ],
+     "description": "After her father's sudden death, sheltered teenager Carrie White, raised by her domineering mother, enters public high school, where she faces a viral bullying scandal and the awakening of mysterious telekinetic powers.",
+     "poster": "https://images.metahub.space/poster/small/tt11540908/img",
+     "background": "https://images.metahub.space/background/medium/tt11540908/img"
+    },
+    {
+     "id": "tt35934755",
+     "type": "series",
+     "name": "Below",
+     "releaseInfo": "2026",
+     "imdbRating": "6.6",
+     "genres": [
+      "Drama",
+      "Horror",
+      "Mystery"
+     ],
+     "description": "When a mysterious sea creature terrorizes a remote town, a fisherman must fight to protect his family, his community, and his way of life.",
+     "poster": "https://images.metahub.space/poster/small/tt35934755/img",
+     "background": "https://images.metahub.space/background/medium/tt35934755/img"
+    },
+    {
+     "id": "tt21097264",
+     "type": "series",
+     "name": "East of Eden",
+     "releaseInfo": "2026",
+     "imdbRating": "8.1",
+     "genres": [
+      "Drama"
+     ],
+     "description": "In the farmlands of the Salinas Valley in California, successive generations of two families, the Trasks and the Hamiltons, are destined to reenact the fateful story of Cain and Abel.",
+     "poster": "https://images.metahub.space/poster/small/tt21097264/img",
+     "background": "https://images.metahub.space/background/medium/tt21097264/img"
+    },
+    {
+     "id": "tt26545992",
+     "type": "series",
+     "name": "Lanterns",
+     "releaseInfo": "2026\u2013",
+     "imdbRating": "7.8",
+     "genres": [
+      "Action",
+      "Crime",
+      "Drama"
+     ],
+     "description": "Lanterns follows new recruit John Stewart and Lantern legend Hal Jordan, two intergalactic cops drawn into a dark, Earth-based mystery as they investigate a murder in the American heartland.",
+     "poster": "https://images.metahub.space/poster/small/tt26545992/img",
+     "background": "https://images.metahub.space/background/medium/tt26545992/img"
+    },
+    {
+     "id": "tt10986410",
+     "type": "series",
+     "name": "Ted Lasso",
+     "releaseInfo": "2020\u2013",
+     "imdbRating": "8.7",
+     "genres": [
+      "Comedy",
+      "Drama",
+      "Sport"
+     ],
+     "description": "American college football coach Ted Lasso is hired to manage AFC Richmond, a struggling English soccer club, and must win over skeptical players, staff, and fans.",
+     "poster": "https://images.metahub.space/poster/small/tt10986410/img",
+     "background": "https://images.metahub.space/background/medium/tt10986410/img"
+    },
+    {
+     "id": "tt31510819",
+     "type": "series",
+     "name": "MobLand",
+     "releaseInfo": "2025\u2013",
+     "imdbRating": "8.3",
+     "genres": [
+      "Crime",
+      "Drama"
+     ],
+     "description": "Power is up for grabs as two warring crime families clash in a battle that threatens to topple empires. In the crossfire stands Harry Da Souza, a street-smart 'fixer' who knows too well where loyalties lie when opposing forces col...",
+     "poster": "https://images.metahub.space/poster/small/tt31510819/img",
+     "background": "https://images.metahub.space/background/medium/tt31510819/img"
+    },
+    {
+     "id": "tt5875444",
+     "type": "series",
+     "name": "Slow Horses",
+     "releaseInfo": "2022\u2013",
+     "imdbRating": "8.4",
+     "genres": [
+      "Drama",
+      "Thriller"
+     ],
+     "description": "A dysfunctional team of MI5 agents navigate the espionage world's smoke and mirrors to defend the UK from sinister forces.",
+     "poster": "https://images.metahub.space/poster/small/tt5875444/img",
+     "background": "https://images.metahub.space/background/medium/tt5875444/img"
+    },
+    {
+     "id": "tt37972251",
+     "type": "series",
+     "name": "War",
+     "releaseInfo": "2025\u2013",
+     "imdbRating": "",
+     "genres": [
+      "Drama",
+      "Thriller"
+     ],
+     "description": "",
+     "poster": "https://images.metahub.space/poster/small/tt37972251/img",
+     "background": "https://images.metahub.space/background/medium/tt37972251/img"
+    },
+    {
+     "id": "tt1844624",
+     "type": "series",
+     "name": "American Horror Story",
+     "releaseInfo": "2011\u2013",
+     "imdbRating": "7.9",
+     "genres": [
+      "Drama",
+      "Horror",
+      "Sci-Fi"
+     ],
+     "description": "An anthology horror drama series centering on different characters and locations, showcasing different aspects of horror. Created and produced by Ryan Murphy and Brad Falchuk.",
+     "poster": "https://images.metahub.space/poster/small/tt1844624/img",
+     "background": "https://images.metahub.space/background/medium/tt1844624/img"
+    },
+    {
+     "id": "tt13210838",
+     "type": "series",
+     "name": "The Gentlemen",
+     "releaseInfo": "2024\u2013",
+     "imdbRating": "8.1",
+     "genres": [
+      "Crime",
+      "Drama"
+     ],
+     "description": "When aristocratic Eddie inherits the family estate, he discovers that it's home to a huge weed empire, and its proprietors aren't going anywhere.",
+     "poster": "https://images.metahub.space/poster/small/tt13210838/img",
+     "background": "https://images.metahub.space/background/medium/tt13210838/img"
+    },
+    {
+     "id": "tt35854736",
+     "type": "series",
+     "name": "Avatar: Seven Havens",
+     "releaseInfo": "2026\u2013",
+     "imdbRating": "",
+     "genres": [
+      "Animation",
+      "Action",
+      "Adventure"
+     ],
+     "description": "After a world-shattering disaster, a young Earthbender learns she's the post-Korra Avatar. Now seen as a harbinger of doom, she and her twin race to save the Seven Havens while pursued by humans and spirits alike.",
+     "poster": "https://images.metahub.space/poster/small/tt35854736/img",
+     "background": "https://images.metahub.space/background/medium/tt35854736/img"
+    },
+    {
+     "id": "tt33539520",
+     "type": "series",
+     "name": "Neagley",
+     "releaseInfo": "2026\u2013",
+     "imdbRating": "7.7",
+     "genres": [
+      "Action",
+      "Crime",
+      "Drama"
+     ],
+     "description": "Neagley, drawing from her experience with Jack Reacher and the 110 Special Investigators, embarks on a perilous mission to expose a sinister threat, risking her life to unravel the mystery.",
+     "poster": "https://images.metahub.space/poster/small/tt33539520/img",
+     "background": "https://images.metahub.space/background/medium/tt33539520/img"
+    },
+    {
+     "id": "tt1196946",
+     "type": "series",
+     "name": "The Mentalist",
+     "releaseInfo": "2008\u20132015",
+     "imdbRating": "8.2",
+     "genres": [
+      "Crime",
+      "Drama",
+      "Mystery"
+     ],
+     "description": "Famous \"psychic\" Patrick Jane outs himself as a fake, and using his heightened observational skills and impeccable knowledge of the human psyche, he works with the police so he can find \"Red John\", the madman who killed his family.",
+     "poster": "https://images.metahub.space/poster/small/tt1196946/img",
+     "background": "https://images.metahub.space/background/medium/tt1196946/img"
+    },
+    {
+     "id": "tt0944947",
+     "type": "series",
+     "name": "Game of Thrones",
+     "releaseInfo": "2011\u20132019",
+     "imdbRating": "9.2",
+     "genres": [
+      "Drama",
+      "Fantasy"
+     ],
+     "description": "Nine noble families vie for control of Westeros and the Iron Throne, while an ancient threat beyond The Wall begins to stir.",
+     "poster": "https://images.metahub.space/poster/small/tt0944947/img",
+     "background": "https://images.metahub.space/background/medium/tt0944947/img"
+    }
+   ]
+  },
+  {
+   "name": "Top Rated",
+   "type": "movie",
+   "items": [
+    {
+     "id": "tt22526100",
+     "type": "movie",
+     "name": "The Love Hypothesis",
+     "releaseInfo": "2026",
+     "imdbRating": "",
+     "genres": [
+      "Comedy",
+      "Romance"
+     ],
+     "description": "After an impulsive kiss, two scientists end up in a fake relationship, testing their theories about love and each other.",
+     "poster": "https://images.metahub.space/poster/small/tt22526100/img",
+     "background": "https://images.metahub.space/background/medium/tt22526100/img"
+    },
+    {
+     "id": "tt16478058",
+     "type": "movie",
+     "name": "Best of the Best",
+     "releaseInfo": "2026",
+     "imdbRating": "",
+     "genres": [
+      "Comedy"
+     ],
+     "description": "A raucous comedy set in the cut-throat world of collegiate Bollywood dance competitions.",
+     "poster": "https://images.metahub.space/poster/small/tt16478058/img",
+     "background": "https://images.metahub.space/background/medium/tt16478058/img"
+    },
+    {
+     "id": "tt28014327",
+     "type": "movie",
+     "name": "Mayday",
+     "releaseInfo": "2026",
+     "imdbRating": "6.9",
+     "genres": [
+      "Action",
+      "Adventure",
+      "Comedy"
+     ],
+     "description": "Lieutenant Troy Brennan's reconnaissance mission over Soviet territory goes awry, forcing him to crash-land and survive in Russian wilderness while evading capture or rescue.",
+     "poster": "https://images.metahub.space/poster/small/tt28014327/img",
+     "background": "https://images.metahub.space/background/medium/tt28014327/img"
+    },
+    {
+     "id": "tt38267923",
+     "type": "movie",
+     "name": "Call My Agent! The Movie",
+     "releaseInfo": "2026",
+     "imdbRating": "",
+     "genres": [
+      "Comedy",
+      "Drama"
+     ],
+     "description": "Follows a former talent agent turned aspiring director who must reunite with her old team when her lead actor drops out days before filming begins.",
+     "poster": "https://images.metahub.space/poster/small/tt38267923/img",
+     "background": "https://images.metahub.space/background/medium/tt38267923/img"
+    },
+    {
+     "id": "tt37281055",
+     "type": "movie",
+     "name": "Buddy",
+     "releaseInfo": "2026",
+     "imdbRating": "7.1",
+     "genres": [
+      "Horror"
+     ],
+     "description": "A brave girl and her friends must escape a kids television show.",
+     "poster": "https://images.metahub.space/poster/small/tt37281055/img",
+     "background": "https://images.metahub.space/background/medium/tt37281055/img"
+    },
+    {
+     "id": "tt35519455",
+     "type": "movie",
+     "name": "It Ends",
+     "releaseInfo": "2025",
+     "imdbRating": "5.8",
+     "genres": [
+      "Drama",
+      "Fantasy",
+      "Horror"
+     ],
+     "description": "Friends on a late-night food run become trapped on an infinite highway with otherworldly terrors lurking beyond. Confined in their car, they must decide whether to accept their fate or attempt escape.",
+     "poster": "https://images.metahub.space/poster/small/tt35519455/img",
+     "background": "https://images.metahub.space/background/medium/tt35519455/img"
+    },
+    {
+     "id": "tt1756855",
+     "type": "movie",
+     "name": "Coyote vs. Acme",
+     "releaseInfo": "2026",
+     "imdbRating": "7.6",
+     "genres": [
+      "Animation",
+      "Adventure",
+      "Comedy"
+     ],
+     "description": "After enduring years of malfunctioning products, Wile E. Coyote teams up with a local personal injury attorney to take on ACME, the manufacturer of anything and everything used by the Looney Tunes characters.",
+     "poster": "https://images.metahub.space/poster/small/tt1756855/img",
+     "background": "https://images.metahub.space/background/medium/tt1756855/img"
+    },
+    {
+     "id": "tt36590417",
+     "type": "movie",
+     "name": "Don't Say Good Luck",
+     "releaseInfo": "2026",
+     "imdbRating": "",
+     "genres": [
+      "Comedy"
+     ],
+     "description": "Sophie Birenbaum gets the lead in her high school show, but at the same time, her mom's cancer comes back.",
+     "poster": "https://images.metahub.space/poster/small/tt36590417/img",
+     "background": "https://images.metahub.space/background/medium/tt36590417/img"
+    },
+    {
+     "id": "tt27165187",
+     "type": "movie",
+     "name": "The End of Oak Street",
+     "releaseInfo": "2026",
+     "imdbRating": "6.5",
+     "genres": [
+      "Action",
+      "Adventure",
+      "Mystery"
+     ],
+     "description": "The Platt family bands together to navigate their new surroundings after a cosmic event transports their suburban neighborhood to someplace unknown.",
+     "poster": "https://images.metahub.space/poster/small/tt27165187/img",
+     "background": "https://images.metahub.space/background/medium/tt27165187/img"
+    },
+    {
+     "id": "tt33095251",
+     "type": "movie",
+     "name": "Tony",
+     "releaseInfo": "2026",
+     "imdbRating": "7.6",
+     "genres": [
+      "Biography",
+      "Comedy",
+      "Drama"
+     ],
+     "description": "A 19-year-old Anthony Bourdain travels to Provincetown and stumbles into the chaotic world of a restaurant kitchen, setting off a summer that will shape the course of his life.",
+     "poster": "https://images.metahub.space/poster/small/tt33095251/img",
+     "background": "https://images.metahub.space/background/medium/tt33095251/img"
+    },
+    {
+     "id": "tt35298123",
+     "type": "movie",
+     "name": "Teenage Sex and Death at Camp Miasma",
+     "releaseInfo": "2026",
+     "imdbRating": "7.1",
+     "genres": [
+      "Comedy",
+      "Horror",
+      "Romance"
+     ],
+     "description": "A director making a slasher sequel becomes obsessed with casting the original film's 'final girl,' leading both women into psychological and sexual chaos.",
+     "poster": "https://images.metahub.space/poster/small/tt35298123/img",
+     "background": "https://images.metahub.space/background/medium/tt35298123/img"
+    },
+    {
+     "id": "tt22084616",
+     "type": "movie",
+     "name": "Spider-Man: Brand New Day",
+     "releaseInfo": "2026",
+     "imdbRating": "8.0",
+     "genres": [
+      "Action",
+      "Adventure"
+     ],
+     "description": "A forgotten Peter Parker lives alone as a full-time Spider-Man until mounting pressure triggers a dangerous change and a powerful new enemy emerges.",
+     "poster": "https://images.metahub.space/poster/small/tt22084616/img",
+     "background": "https://images.metahub.space/background/medium/tt22084616/img"
+    },
+    {
+     "id": "tt32332915",
+     "type": "movie",
+     "name": "I Want Your Sex",
+     "releaseInfo": "2026",
+     "imdbRating": "6.0",
+     "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+     ],
+     "description": "Elliot lands a job for Erika Tracy as her sexual muse.",
+     "poster": "https://images.metahub.space/poster/small/tt32332915/img",
+     "background": "https://images.metahub.space/background/medium/tt32332915/img"
+    },
+    {
+     "id": "tt18259538",
+     "type": "movie",
+     "name": "Avatar Aang: The Last Airbender",
+     "releaseInfo": "2026",
+     "imdbRating": "",
+     "genres": [
+      "Animation",
+      "Action",
+      "Adventure"
+     ],
+     "description": "Avatar Aang, the world's last Airbender, learns of an ancient power that could save his culture from extinction. With the help of his friends, he embarks on a global quest to find it before it falls into the wrong hands.",
+     "poster": "https://images.metahub.space/poster/small/tt18259538/img",
+     "background": "https://images.metahub.space/background/medium/tt18259538/img"
+    }
+   ]
+  },
+  {
+   "name": "Action & Adventure",
+   "type": "movie",
+   "items": [
+    {
+     "id": "tt22084616",
+     "type": "movie",
+     "name": "Spider-Man: Brand New Day",
+     "releaseInfo": "2026",
+     "imdbRating": "8.0",
+     "genres": [
+      "Action",
+      "Adventure"
+     ],
+     "description": "A forgotten Peter Parker lives alone as a full-time Spider-Man until mounting pressure triggers a dangerous change and a powerful new enemy emerges.",
+     "poster": "https://images.metahub.space/poster/small/tt22084616/img",
+     "background": "https://images.metahub.space/background/medium/tt22084616/img"
+    },
+    {
+     "id": "tt15047880",
+     "type": "movie",
+     "name": "Disclosure Day",
+     "releaseInfo": "2026",
+     "imdbRating": "6.4",
+     "genres": [
+      "Action",
+      "Mystery",
+      "Sci-Fi"
+     ],
+     "description": "If you found out we weren't alone, if someone showed you, proved it to you, would that frighten you?",
+     "poster": "https://images.metahub.space/poster/small/tt15047880/img",
+     "background": "https://images.metahub.space/background/medium/tt15047880/img"
+    },
+    {
+     "id": "tt36983905",
+     "type": "movie",
+     "name": "The Uprising",
+     "releaseInfo": "2026",
+     "imdbRating": "",
+     "genres": [
+      "Action",
+      "Drama",
+      "History"
+     ],
+     "description": "Based on the true story of the uprising that inspired the legend of Robin Hood, Andrew Garfield stars as the leader of a rebellion against the tyranny of King Richard II in a fight for justice.",
+     "poster": "https://images.metahub.space/poster/small/tt36983905/img",
+     "background": "https://images.metahub.space/background/medium/tt36983905/img"
+    },
+    {
+     "id": "tt27165187",
+     "type": "movie",
+     "name": "The End of Oak Street",
+     "releaseInfo": "2026",
+     "imdbRating": "6.5",
+     "genres": [
+      "Action",
+      "Adventure",
+      "Mystery"
+     ],
+     "description": "The Platt family bands together to navigate their new surroundings after a cosmic event transports their suburban neighborhood to someplace unknown.",
+     "poster": "https://images.metahub.space/poster/small/tt27165187/img",
+     "background": "https://images.metahub.space/background/medium/tt27165187/img"
+    },
+    {
+     "id": "tt31349844",
+     "type": "movie",
+     "name": "Runner",
+     "releaseInfo": "2026",
+     "imdbRating": "6.6",
+     "genres": [
+      "Action",
+      "Comedy",
+      "Thriller"
+     ],
+     "description": "A former soldier and his unlikely partner become the targets of a ruthless cartel while racing to complete a critical medical delivery and save the life of a little girl.",
+     "poster": "https://images.metahub.space/poster/small/tt31349844/img",
+     "background": "https://images.metahub.space/background/medium/tt31349844/img"
+    },
+    {
+     "id": "tt27369017",
+     "type": "movie",
+     "name": "Hope",
+     "releaseInfo": "2026",
+     "imdbRating": "6.9",
+     "genres": [
+      "Action",
+      "Drama",
+      "Horror"
+     ],
+     "description": "A mysterious discovery is made on the outskirts of the remote harbor town. The residents find themselves in a desperate fight for survival against something they have never encountered before.",
+     "poster": "https://images.metahub.space/poster/small/tt27369017/img",
+     "background": "https://images.metahub.space/background/medium/tt27369017/img"
+    },
+    {
+     "id": "tt28014327",
+     "type": "movie",
+     "name": "Mayday",
+     "releaseInfo": "2026",
+     "imdbRating": "6.9",
+     "genres": [
+      "Action",
+      "Adventure",
+      "Comedy"
+     ],
+     "description": "Lieutenant Troy Brennan's reconnaissance mission over Soviet territory goes awry, forcing him to crash-land and survive in Russian wilderness while evading capture or rescue.",
+     "poster": "https://images.metahub.space/poster/small/tt28014327/img",
+     "background": "https://images.metahub.space/background/medium/tt28014327/img"
+    },
+    {
+     "id": "tt27681354",
+     "type": "movie",
+     "name": "In the Grey",
+     "releaseInfo": "2026",
+     "imdbRating": "6.3",
+     "genres": [
+      "Action",
+      "Crime",
+      "Thriller"
+     ],
+     "description": "A covert team of elite operatives are living in the shadows. When a ruthless despot steals a billion-dollar fortune, they're sent to steal it back--an impossible heist that erupts into a deadly game of strategy, deception and surv...",
+     "poster": "https://images.metahub.space/poster/small/tt27681354/img",
+     "background": "https://images.metahub.space/background/medium/tt27681354/img"
+    },
+    {
+     "id": "tt31193180",
+     "type": "movie",
+     "name": "Sinners",
+     "releaseInfo": "2025",
+     "imdbRating": "7.5",
+     "genres": [
+      "Horror"
+     ],
+     "description": "Trying to leave their troubled lives behind, twin brothers return to their hometown to start again, only to discover that an even greater evil is waiting to welcome them back.",
+     "poster": "https://images.metahub.space/poster/small/tt31193180/img",
+     "background": "https://images.metahub.space/background/medium/tt31193180/img"
+    },
+    {
+     "id": "tt4154796",
+     "type": "movie",
+     "name": "Avengers: Endgame",
+     "releaseInfo": "2019",
+     "imdbRating": "8.4",
+     "genres": [
+      "Action",
+      "Adventure",
+      "Sci-Fi"
+     ],
+     "description": "After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe.",
+     "poster": "https://images.metahub.space/poster/small/tt4154796/img",
+     "background": "https://images.metahub.space/background/medium/tt4154796/img"
+    },
+    {
+     "id": "tt1341338",
+     "type": "movie",
+     "name": "Good Luck, Have Fun, Don't Die",
+     "releaseInfo": "2026",
+     "imdbRating": "7.0",
+     "genres": [
+      "Action",
+      "Adventure",
+      "Comedy"
+     ],
+     "description": "A \"Man From the Future\" arrives at a diner in Los Angeles where he must recruit the precise combination of disgruntled patrons to join him on a one-night quest to save the world from the terminal threat of a rogue artificial intel...",
+     "poster": "https://images.metahub.space/poster/small/tt1341338/img",
+     "background": "https://images.metahub.space/background/medium/tt1341338/img"
+    },
+    {
+     "id": "tt34385135",
+     "type": "movie",
+     "name": "Colony",
+     "releaseInfo": "2026",
+     "imdbRating": "6.5",
+     "genres": [
+      "Action",
+      "Adventure",
+      "Crime"
+     ],
+     "description": "Professor Se Jeong attends a biotech conference, only to witness it spiral into catastrophe when a rapidly mutating virus is unleashed. As the outbreak spreads and the infected begin to transform, authorities seal off the entire f...",
+     "poster": "https://images.metahub.space/poster/small/tt34385135/img",
+     "background": "https://images.metahub.space/background/medium/tt34385135/img"
+    },
+    {
+     "id": "tt5177120",
+     "type": "movie",
+     "name": "The Ministry of Ungentlemanly Warfare",
+     "releaseInfo": "2024",
+     "imdbRating": "6.8",
+     "genres": [
+      "Action",
+      "Comedy",
+      "War"
+     ],
+     "description": "The British military recruits a small group of highly skilled soldiers to strike against German forces behind enemy lines during World War II.",
+     "poster": "https://images.metahub.space/poster/small/tt5177120/img",
+     "background": "https://images.metahub.space/background/medium/tt5177120/img"
+    },
+    {
+     "id": "tt30825738",
+     "type": "movie",
+     "name": "Star Wars: The Mandalorian and Grogu",
+     "releaseInfo": "2026",
+     "imdbRating": "6.7",
+     "genres": [
+      "Action",
+      "Adventure",
+      "Family"
+     ],
+     "description": "Once a lone bounty hunter, Mandalorian Din Djarin and his apprentice Grogu embark on an exciting new Star Wars adventure.",
+     "poster": "https://images.metahub.space/poster/small/tt30825738/img",
+     "background": "https://images.metahub.space/background/medium/tt30825738/img"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+# --- excluded on purpose ---------------------------------------------------
+# glasshouse/ is a vendored checkout of the upstream Glasshouse project
+# (it carries its own .git); install it separately, don't vendor it here.
+glasshouse/
+
+# screenshots and other local scratch
+shots/
+
+# build output: the .ipk packages themselves are rebuilt from app/
+# (dist/*.sh deploy helpers are kept)
+dist/*
+!dist/*.sh
+*.ipk
+
+# --- never commit ----------------------------------------------------------
+**/__pycache__/
+*.log
+.DS_Store
+*.key

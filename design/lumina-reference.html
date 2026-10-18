@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumina — TV Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+@layer od-layout {
+  :where(.od-stack,.od-row,.od-row-top,.od-cluster,.od-grid,.od-field,.od-stat,.od-cell,.od-tile) > :where(*) { min-width: 0; }
+
+  .od-stack   { display: flex; flex-direction: column; gap: var(--od-gap, 8px); }
+  .od-row     { display: flex; align-items: center; gap: var(--od-gap, 8px); }
+  .od-row-top { display: flex; align-items: flex-start; gap: var(--od-gap, 8px); }
+  .od-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--od-gap, 8px); }
+  .od-fill    { flex: 1 1 0; min-width: 0; }
+  .od-fixed   { flex: none; }
+  .od-grid    { display: grid; gap: var(--od-gap, 12px); grid-template-columns: repeat(var(--od-cols, 3), minmax(0, 1fr)); }
+
+  .od-stat, .od-field, .od-cell { display: grid; gap: var(--od-gap, 2px); }
+  :where(.od-stat,.od-field,.od-cell) > :where(*) { display: block; }
+  .od-tile { display: grid; grid-template-rows: auto 1fr; }
+  :where(.od-tile) > :where(*) { display: block; }
+
+  .od-media { display: block; width: 100%; height: auto; aspect-ratio: var(--od-ratio, auto); }
+  .od-media-cover { object-fit: cover; }
+
+  .od-icon { display: inline-block; inline-size: var(--od-icon-size, 1em); block-size: var(--od-icon-size, 1em); flex: none; }
+
+  .od-truncate { display: block; max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .od-clamp-2, .od-clamp-3 { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+  .od-clamp-2 { -webkit-line-clamp: 2; }
+  .od-clamp-3 { -webkit-line-clamp: 3; }
+  .od-lines-2 { min-height: calc(2 * 1.4em); }
+  .od-nowrap  { white-space: nowrap; }
+  .od-keep    { word-break: keep-all; overflow-wrap: anywhere; }
+
+  .od-screen { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; height: 100%; }
+  .od-scroll { overflow-y: auto; overscroll-behavior: contain; min-height: 0; }
+
+  .od-rail { display: flex; gap: var(--od-gap, 8px); overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
+             padding-inline: var(--od-rail-pad, 16px); scroll-padding-inline: var(--od-rail-pad, 16px); }
+  .od-rail::-webkit-scrollbar { display: none; }
+  :where(.od-rail) > :where(*) { flex: none; scroll-snap-align: start; }
+  :where(.od-rail) > :where(:last-child) { margin-inline-end: var(--od-rail-pad, 16px); }
+
+  .od-spacer { flex: none; visibility: hidden; pointer-events: none; }
+  .od-touch  { min-width: 44px; min-height: 44px; }
+}
+:root {
+  --bg: #0B0E14;
+  --bg-raise: #11151E;
+  --panel: #151A24;
+  --line: rgba(255,255,255,.09);
+  --text: #F1F4F9;
+  --text-2: #A9B2C1;
+  --text-3: #8A93A8;
+  --accent: #FFB454;
+  --accent-ink: #1C1204;
+  --ring: #FFC97E;
+  --navpad: clamp(20px, 2.5vw, 48px);
+  --focus-scale: 1.05;
+  --dur-1: 180ms;
+  --dur-2: 260ms;
+  --ease-out: cubic-bezier(.22,.8,.36,1);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { font-size: clamp(12.5px, .94vw, 19px); }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Manrope", system-ui, -apple-system, sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, .brand-word { font-family: "Space Grotesk", "Manrope", system-ui, sans-serif; }
+img { display: block; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:focus { outline: none; }
+:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px;
+  clip-path: inset(50%); overflow: hidden; white-space: nowrap;
+}
+.od-icon-lg { --od-icon-size: 1.3em; }
+
+.app { display: flex; flex-direction: column; height: 100dvh; }
+
+.topbar {
+  flex: none;
+  display: flex; align-items: center; gap: clamp(1rem, 2.5vw, 2.5rem);
+  padding: .8rem var(--navpad);
+  border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: center; gap: .7rem; text-decoration: none; color: var(--text); }
+.brand:focus-visible { outline-offset: 6px; border-radius: 10px; }
+.brand-glyph {
+  width: 2.1rem; height: 2.1rem; border-radius: .6em;
+  background: var(--accent); color: var(--accent-ink);
+  display: grid; place-items: center;
+}
+.brand-glyph .od-icon { --od-icon-size: 1.05em; }
+.brand-word { font-weight: 700; font-size: 1.3rem; letter-spacing: .16em; }
+.main-nav { display: flex; gap: .35rem; overflow-x: auto; scrollbar-width: none; }
+.main-nav::-webkit-scrollbar { display: none; }
+.nav-item {
+  position: relative;
+  padding: .55rem 1.05rem; border-radius: 999px;
+  color: var(--text-2); font-weight: 600; white-space: nowrap;
+  transition: background var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out);
+}
+.nav-item:hover { background: rgba(255,255,255,.07); color: var(--text); }
+.nav-item[aria-current="page"] { color: var(--text); }
+.nav-item[aria-current="page"]::after {
+  content: ""; position: absolute; left: 50%; bottom: .18rem;
+  width: .28rem; height: .28rem; border-radius: 50%;
+  transform: translateX(-50%); background: var(--accent);
+}
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: .55rem; }
+.icon-btn {
+  width: 2.75rem; height: 2.75rem; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(255,255,255,.06); color: var(--text);
+  font-size: 1.15rem;
+  transition: background var(--dur-1) var(--ease-out);
+}
+.icon-btn:hover { background: rgba(255,255,255,.13); }
+.avatar {
+  width: 2.75rem; height: 2.75rem; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--panel); border: 1px solid var(--line);
+  font-weight: 800; font-size: 1rem; letter-spacing: .02em;
+}
+
+.hero {
+  position: relative;
+  flex: none;
+  margin: 1.1rem var(--navpad) .9rem;
+  min-height: clamp(300px, 44vh, 33rem);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background: var(--bg-raise);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+.hero-bg { position: absolute; inset: 0; }
+.hero-bg img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: blur(34px) saturate(1.05);
+  transform: scale(1.14); opacity: .42;
+}
+.hero-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(11,14,20,.94) 6%, rgba(11,14,20,.6) 52%, rgba(11,14,20,.18)),
+    linear-gradient(0deg, rgba(11,14,20,.92), rgba(11,14,20,0) 46%);
+}
+.hero-content {
+  position: relative;
+  padding: 2.4rem 3rem 3.4rem 2.8rem;
+  max-width: 58%;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 1.05rem;
+}
+.eyebrow {
+  margin: 0;
+  color: var(--accent);
+  font-weight: 800; font-size: .78rem; letter-spacing: .24em; text-transform: uppercase;
+}
+.hero-title {
+  margin: 0;
+  font-size: clamp(2.4rem, 4.3vw, 4.4rem);
+  font-weight: 700; line-height: 1.04; letter-spacing: -.02em;
+}
+.meta-row { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.chip {
+  display: inline-flex; align-items: center; gap: .4em;
+  padding: .34em .8em; border-radius: .55em;
+  background: rgba(255,255,255,.09);
+  font-weight: 600; font-size: .87rem; line-height: 1.3; color: var(--text-2);
+  white-space: nowrap;
+}
+.chip-line { border: 1px solid rgba(255,255,255,.4); background: transparent; color: var(--text); letter-spacing: .08em; font-weight: 800; }
+.chip-accent { background: rgba(255,180,84,.16); color: var(--ring); }
+.hero-syn { margin: 0; max-width: 42ch; color: var(--text-2); font-size: 1.02rem; }
+.hero-actions { display: flex; gap: .8rem; margin-top: .35rem; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: .6em;
+  padding: .85em 1.6em; border-radius: 999px;
+  font-weight: 800; font-size: 1.02rem; white-space: nowrap;
+  transition: transform var(--dur-1) var(--ease-out), background var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out);
+}
+.btn:active { transform: scale(.965); }
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { background: var(--ring); box-shadow: 0 10px 30px rgba(255,180,84,.25); }
+.btn-ghost { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); color: var(--text); }
+.btn-ghost:hover { background: rgba(255,255,255,.15); }
+.btn-ghost.on { border-color: var(--accent); color: var(--ring); background: rgba(255,180,84,.1); }
+.hero-art { position: relative; align-self: end; padding: 1.6rem 2.6rem 0 0; }
+.hero-art img {
+  height: clamp(250px, 36vh, 27rem);
+  width: auto;
+  border-radius: .9rem .9rem 0 0;
+  box-shadow: 0 30px 90px rgba(0,0,0,.65), 0 0 0 1px rgba(255,255,255,.09);
+}
+.hero-dots {
+  position: absolute; left: 2.8rem; bottom: 1.35rem;
+  display: flex; gap: .4rem;
+}
+.hero-dots span { width: .45rem; height: .45rem; border-radius: 999px; background: rgba(255,255,255,.28); transition: width var(--dur-2) var(--ease-out), background var(--dur-2); }
+.hero-dots span.on { width: 1.5rem; background: var(--accent); }
+
+.hero.swap .hero-content > * { animation: rise .34s var(--ease-out) both; }
+.hero.swap .hero-content > *:nth-child(2) { animation-delay: .04s; }
+.hero.swap .hero-content > *:nth-child(3) { animation-delay: .08s; }
+.hero.swap .hero-content > *:nth-child(4) { animation-delay: .12s; }
+.hero.swap .hero-content > *:nth-child(5) { animation-delay: .16s; }
+.hero.swap .hero-art img { animation: artfade .55s var(--ease-out) both; }
+.hero.swap .hero-bg img { animation: artfade .7s var(--ease-out) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes artfade { from { opacity: 0; } to { opacity: 1; } }
+.hero-bg img { opacity: .42; }
+.hero-art img { opacity: 1; }
+
+.rails {
+  flex: 1; min-height: 0;
+  overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none;
+  display: flex; flex-direction: column; gap: 2rem;
+  padding: .4rem var(--navpad) 4.2rem;
+}
+.rails::-webkit-scrollbar { display: none; }
+.rail h2 { margin: 0 0 .85rem; font-size: 1.35rem; font-weight: 700; letter-spacing: -.01em; }
+.rail-track {
+  --od-gap: .85rem;
+  --od-rail-pad: 4px;
+  padding-block: .55rem 1.6rem;
+  mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+}
+.card {
+  position: relative;
+  width: clamp(9rem, 12.5vw, 12.2rem);
+  border-radius: .65rem;
+  text-align: left;
+  transition: transform var(--dur-1) var(--ease-out), opacity var(--dur-2) var(--ease-out), box-shadow var(--dur-1) var(--ease-out);
+}
+.card-art {
+  position: relative; display: block;
+  border-radius: inherit; overflow: hidden;
+  background: var(--panel);
+  aspect-ratio: 2 / 3;
+  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+.card-art img { height: 100%; }
+.card-shade {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 42%;
+  background: linear-gradient(0deg, rgba(7,9,13,.88), rgba(7,9,13,0));
+}
+.card-name {
+  position: absolute; left: .8rem; right: .8rem; bottom: 1.45rem;
+  color: #fff; font-weight: 800; font-size: .92rem; line-height: 1.3;
+  opacity: 0; transform: translateY(5px);
+  transition: opacity var(--dur-1) var(--ease-out), transform var(--dur-1) var(--ease-out);
+}
+.card--progress .card-name { bottom: 2.1rem; }
+.card--in-list .card-flag { opacity: 1; transform: none; }
+.card-flag {
+  position: absolute; top: .6rem; right: .6rem;
+  width: 1.5rem; height: 1.5rem; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(10,13,19,.72); color: var(--ring);
+  opacity: 0; transform: scale(.8);
+  transition: opacity var(--dur-1) var(--ease-out), transform var(--dur-1) var(--ease-out);
+}
+.card-flag .od-icon { --od-icon-size: .85em; }
+.card-progress {
+  position: absolute; left: .8rem; right: .8rem; bottom: .95rem; height: .25rem;
+  border-radius: 999px; background: rgba(255,255,255,.28); overflow: hidden;
+}
+.card-progress > span { display: block; height: 100%; width: calc(var(--p) * 100%); background: var(--accent); border-radius: inherit; }
+.card:is(:focus-visible, :hover) {
+  transform: scale(var(--focus-scale));
+  box-shadow: 0 22px 55px rgba(0,0,0,.6);
+  z-index: 2;
+}
+.card:is(:focus-visible, :hover) .card-name { opacity: 1; transform: none; }
+.rail-track:has(:focus-visible) .card:not(:focus-visible) { opacity: .5; }
+
+.empty { align-self: center; text-align: center; padding: 4rem 1rem; max-width: 34rem; }
+.empty-glyph { color: var(--text-3); font-size: 2.2rem; margin-bottom: 1rem; }
+.empty h2 { margin: 0 0 .5rem; font-size: 1.6rem; }
+.empty p { margin: 0; color: var(--text-2); }
+
+.hints {
+  position: fixed; right: 1.25rem; bottom: .9rem; z-index: 30;
+  display: flex; gap: 1rem;
+  padding: .45rem .95rem; border-radius: 999px;
+  background: rgba(17,21,30,.78); border: 1px solid var(--line);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  color: var(--text-3); font-size: .78rem; font-weight: 600;
+  pointer-events: none;
+}
+.hints kbd { color: var(--text-2); font-weight: 800; font-family: inherit; margin-right: .25rem; }
+
+.overlay { position: fixed; inset: 0; z-index: 40; }
+.detail { display: grid; place-items: center; padding: clamp(1rem, 3vh, 2.5rem); }
+.detail[hidden], .search[hidden], .player[hidden], .profile-menu[hidden] { display: none; }
+.detail-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(6,9,14,.8);
+  -webkit-backdrop-filter: blur(18px) saturate(1.1); backdrop-filter: blur(18px) saturate(1.1);
+  opacity: 0; transition: opacity .22s var(--ease-out);
+}
+.detail-panel {
+  position: relative;
+  width: min(64rem, 94vw); max-height: min(40rem, 90vh);
+  background: var(--bg-raise);
+  border: 1px solid var(--line); border-radius: 1.1rem;
+  overflow: hidden;
+  display: grid; grid-template-columns: auto minmax(0, 1fr);
+  box-shadow: 0 50px 140px rgba(0,0,0,.65);
+  opacity: 0; transform: scale(.96) translateY(10px);
+  transition: opacity .24s var(--ease-out), transform .24s var(--ease-out);
+}
+.overlay.on .detail-backdrop { opacity: 1; }
+.overlay.on .detail-panel { opacity: 1; transform: none; }
+.detail-bg { position: absolute; inset: 0; pointer-events: none; }
+.detail-bg img { width: 100%; height: 100%; object-fit: cover; filter: blur(40px); opacity: .22; transform: scale(1.2); }
+.detail-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(11,14,20,.55), rgba(11,14,20,.2)); }
+.detail-poster { position: relative; height: min(40rem, 90vh); }
+.detail-poster img { height: 100%; width: auto; }
+.detail-info {
+  position: relative;
+  padding: 2.2rem 2.6rem; overflow-y: auto; scrollbar-width: none;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;
+}
+.detail-info::-webkit-scrollbar { display: none; }
+.detail-info h2 { margin: 0; font-size: clamp(1.7rem, 2.6vw, 2.4rem); letter-spacing: -.02em; line-height: 1.1; }
+.detail-syn { margin: 0; color: var(--text-2); max-width: 52ch; }
+.detail-credits { margin: 0; color: var(--text-2); font-size: .93rem; }
+.detail-credits b { color: var(--text-3); font-weight: 700; }
+.detail-close { position: absolute; top: .9rem; right: .9rem; z-index: 3; background: rgba(10,13,19,.6); }
+
+.search {
+  z-index: 50;
+  background: rgba(6,9,14,.88);
+  -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px);
+  overflow-y: auto; scrollbar-width: none;
+  padding: clamp(1.5rem, 6vh, 4rem) var(--navpad);
+}
+.search::-webkit-scrollbar { display: none; }
+.search-inner { max-width: 62rem; margin: 0 auto; }
+.search-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+.search-bar .od-icon { color: var(--text-3); font-size: 1.4rem; }
+.search-bar input {
+  flex: 1; min-width: 0;
+  background: rgba(255,255,255,.07); border: 1px solid var(--line);
+  border-radius: 999px; padding: .95rem 1.5rem;
+  color: var(--text); font: 600 1.1rem "Manrope", sans-serif;
+}
+.search-bar input::placeholder { color: var(--text-3); }
+.search-bar input:focus-visible { outline: none; border-color: var(--accent); }
+.search-hint { margin: 0 0 1.1rem; color: var(--text-3); font-size: .9rem; font-weight: 600; }
+.search-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.6rem, 1fr)); gap: 1rem; }
+.search-grid .card { width: 100%; }
+.search-empty { color: var(--text-2); padding: 2.5rem 0; }
+
+.player { z-index: 60; background: #05070A; display: grid; place-items: center; }
+.player-exit { position: absolute; top: 1.4rem; left: 1.4rem; }
+.player-core { display: flex; flex-direction: column; align-items: center; gap: 1.4rem; text-align: center; padding: 2rem; }
+.player-kicker { margin: 0; color: var(--accent); font-weight: 800; font-size: .8rem; letter-spacing: .24em; text-transform: uppercase; }
+.player-core h2 { margin: 0; font-size: clamp(1.8rem, 3.4vw, 3rem); letter-spacing: -.02em; }
+.player-bar { width: min(34rem, 70vw); height: .3rem; border-radius: 999px; background: rgba(255,255,255,.16); overflow: hidden; }
+.player-bar span { display: block; height: 100%; width: 0%; background: var(--accent); border-radius: inherit; transition: width .4s linear; }
+.player-note { margin: 0; color: var(--text-3); font-size: .88rem; }
+
+.profile-menu {
+  position: fixed; top: calc(var(--topbar-h, 4.6rem) + .4rem); right: var(--navpad); z-index: 55;
+  min-width: 15rem; padding: .4rem;
+  background: var(--bg-raise); border: 1px solid var(--line); border-radius: .85rem;
+  box-shadow: 0 30px 80px rgba(0,0,0,.6);
+}
+.profile-menu button {
+  display: flex; align-items: center; gap: .7rem; width: 100%;
+  padding: .65rem .8rem; border-radius: .6rem; font-weight: 600; text-align: left;
+  color: var(--text-2);
+}
+.profile-menu button:hover { background: rgba(255,255,255,.07); color: var(--text); }
+.profile-menu .od-icon { color: var(--text-3); }
+.profile-menu .pm-check { margin-left: auto; color: var(--ring); opacity: 0; }
+.profile-menu button[aria-checked="true"] { color: var(--text); }
+.profile-menu button[aria-checked="true"] .pm-check { opacity: 1; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 2.2rem; z-index: 70;
+  transform: translate(-50%, 10px);
+  padding: .7rem 1.3rem; border-radius: 999px;
+  background: #E9EDF4; color: #10141B;
+  font-weight: 800; font-size: .95rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
+}
+.toast.on { opacity: 1; transform: translate(-50%, 0); }
+
+@media (max-width: 900px) {
+  .hero-art { display: none; }
+  .hero-content { max-width: 100%; padding: 2rem; }
+  .hero-dots { left: 2rem; }
+}
+@media (max-width: 640px) {
+  .hints { display: none; }
+  .detail-panel { grid-template-columns: 1fr; max-height: 92vh; }
+  .detail-poster { height: auto; justify-self: center; padding-top: 1rem; }
+  .detail-poster img { height: auto; max-height: 44vh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="topbar">
+    <button class="brand" id="brandBtn" data-focusable data-tab="home" aria-label="Lumina home">
+      <span class="brand-glyph" aria-hidden="true">
+        <svg class="od-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+      </span>
+      <span class="brand-word">LUMINA</span>
+    </button>
+    <nav class="main-nav" aria-label="Sections">
+      <button class="nav-item" id="navHome" data-focusable data-tab="home" aria-current="page">Home</button>
+      <button class="nav-item" data-focusable data-tab="movies">Movies</button>
+      <button class="nav-item" data-focusable data-tab="shows">Shows</button>
+      <button class="nav-item" data-focusable data-tab="mylist">My List</button>
+    </nav>
+    <div class="topbar-right">
+      <button class="icon-btn" id="searchBtn" data-focusable aria-label="Search">
+        <svg class="od-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      </button>
+      <button class="icon-btn avatar" id="profileBtn" data-focusable aria-label="Profiles" aria-haspopup="menu" aria-expanded="false"><span id="avatarInitials">S</span></button>
+    </div>
+  </header>
+
+  <section class="hero" id="hero" aria-label="Featured">
+    <div class="hero-bg" aria-hidden="true"><img id="heroBg" alt=""></div>
+    <div class="hero-content">
+      <p class="eyebrow">Featured</p>
+      <h1 class="hero-title" id="heroTitle"></h1>
+      <div class="meta-row" id="heroMeta"></div>
+      <p class="hero-syn od-clamp-2" id="heroSyn"></p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" id="heroPlay" data-focusable><svg class="od-icon od-icon-lg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg><span>Play</span></button>
+        <button class="btn btn-ghost" id="heroList" data-focusable></button>
+      </div>
+    </div>
+    <div class="hero-art"><img id="heroArt" alt=""></div>
+    <div class="hero-dots" id="heroDots" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
+  </section>
+
+  <main class="rails" id="rails" aria-label="Browse titles"></main>
+</div>
+
+<div class="overlay detail" id="detail" hidden>
+  <div class="detail-backdrop" aria-hidden="true"></div>
+  <div class="detail-panel" role="dialog" aria-modal="true" aria-labelledby="dTitle">
+    <div class="detail-bg" aria-hidden="true"><img id="dBg" alt=""></div>
+    <div class="detail-poster"><img id="dPoster" alt=""></div>
+    <div class="detail-info">
+      <h2 id="dTitle"></h2>
+      <div class="meta-row" id="dMeta"></div>
+      <p class="detail-syn" id="dSyn"></p>
+      <p class="detail-credits" id="dCredits"></p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" id="dPlay" data-focusable><svg class="od-icon od-icon-lg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg><span>Play</span></button>
+        <button class="btn btn-ghost" id="dList" data-focusable></button>
+      </div>
+    </div>
+    <button class="icon-btn detail-close" id="dClose" data-focusable aria-label="Close details">
+      <svg class="od-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="overlay search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search titles">
+  <div class="search-inner">
+    <div class="search-bar">
+      <svg class="od-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <label class="sr-only" for="q">Search titles</label>
+      <input id="q" type="search" placeholder="Titles, genres, people" autocomplete="off">
+      <button class="icon-btn" id="qClose" data-focusable aria-label="Close search">
+        <svg class="od-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <p class="search-hint" id="qHint">All titles</p>
+    <div class="search-grid" id="qGrid"></div>
+  </div>
+</div>
+
+<div class="overlay player" id="player" hidden>
+  <button class="icon-btn player-exit" id="pExit" data-focusable aria-label="Exit playback">
+    <svg class="od-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <div class="player-core">
+    <p class="player-kicker">Now playing · demo</p>
+    <h2 id="pTitle"></h2>
+    <div class="player-bar"><span id="pFill"></span></div>
+    <p class="player-note">Press Esc, Backspace or the exit button to leave</p>
+  </div>
+</div>
+
+<div class="profile-menu" id="pmenu" hidden role="menu" aria-label="Choose profile">
+  <button data-focusable role="menuitemradio" data-profile="Sam" aria-checked="true"><svg class="od-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.2" r="3.6"/><path d="M4.8 19.4a7.6 7.6 0 0 1 14.4 0"/></svg>Sam<svg class="od-icon pm-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg></button>
+  <button data-focusable role="menuitemradio" data-profile="Maya" aria-checked="false"><svg class="od-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.2" r="3.6"/><path d="M4.8 19.4a7.6 7.6 0 0 1 14.4 0"/></svg>Maya<svg class="od-icon pm-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg></button>
+  <button data-focusable role="menuitemradio" data-profile="Kids" aria-checked="false"><svg class="od-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.2" r="3.6"/><path d="M4.8 19.4a7.6 7.6 0 0 1 14.4 0"/></svg>Kids<svg class="od-icon pm-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg></button>
+</div>
+
+<div class="hints" aria-hidden="true">
+  <span><kbd>↑↓</kbd> move</span><span><kbd>←→</kbd> browse</span><span><kbd>↵</kbd> select</span><span><kbd>esc</kbd> back</span>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const DIMS = {
+  'dune-two': [259, 384], 'oppenheimer': [259, 384], 'shogun': [282, 353], 'chernobyl': [250, 370],
+  'everything-everywhere': [250, 370], 'spider-verse': [259, 385], 'barbie': [250, 375],
+  'past-lives': [255, 378], 'top-gun': [261, 381], 'interstellar': [220, 326],
+  'parasite': [265, 378], 'get-out': [258, 387], 'joker': [259, 384],
+  'blade-runner-2049': [220, 326], 'la-la-land': [260, 385], 'arrival': [220, 343], 'knives-out': [260, 385],
+};
+const T = {
+  'dune-two': { t: 'Dune: Part Two', y: 2024, r: 'PG-13', len: '2h 46m', kind: 'film', g: ['Sci-Fi', 'Adventure', 'Drama'], d: 'Denis Villeneuve', c: 'Timothée Chalamet, Zendaya', s: 'Paul Atreides unites with the Fremen to wage war against House Harkonnen — torn between the love of his life and the destiny he fears.', img: 'assets/dune-two.jpg' },
+  'oppenheimer': { t: 'Oppenheimer', y: 2023, r: 'R', len: '3h 0m', kind: 'film', g: ['Drama', 'History', 'Biography'], d: 'Christopher Nolan', c: 'Cillian Murphy, Emily Blunt, Robert Downey Jr.', s: 'J. Robert Oppenheimer races to build the atomic bomb — then must live with what he unleashes.', img: 'assets/oppenheimer.jpg' },
+  'shogun': { t: 'Shōgun', y: 2024, r: 'TV-MA', len: '1 season', kind: 'series', g: ['Drama', 'History', 'Adventure'], d: 'Justin Marks, Rachel Kondo', c: 'Hiroyuki Sanada, Cosmo Jarvis, Anna Sawai', s: 'In feudal Japan, a shipwrecked English sailor becomes a pawn in a ruthless struggle for power between a lord and his rivals.', img: 'assets/shogun.jpg' },
+  'chernobyl': { t: 'Chernobyl', y: 2019, r: 'TV-MA', len: '1 season', kind: 'series', g: ['Drama', 'History', 'Thriller'], d: 'Craig Mazin', c: 'Jared Harris, Stellan Skarsgård', s: 'The true story of the 1986 nuclear disaster — and the people who sacrificed everything to contain the fallout.', img: 'assets/chernobyl.jpg' },
+  'everything-everywhere': { t: 'Everything Everywhere All at Once', y: 2022, r: 'R', len: '2h 19m', kind: 'film', g: ['Sci-Fi', 'Comedy', 'Adventure'], d: 'Daniel Kwan, Daniel Scheinert', c: 'Michelle Yeoh, Ke Huy Quan', s: 'A weary laundromat owner discovers only a multiverse of her own parallels can stop a cosmic collapse — if she can learn to connect.', img: 'assets/everything-everywhere.jpg' },
+  'spider-verse': { t: 'Spider-Man: Across the Spider-Verse', y: 2023, r: 'PG', len: '2h 20m', kind: 'film', g: ['Animation', 'Action', 'Adventure'], d: 'Joaquim Dos Santos, Kemp Powers', c: 'Shameik Moore, Hailee Steinfeld', s: 'Miles Morales is flung across the multiverse, where he clashes with a society of Spider-People over how to face a new threat.', img: 'assets/spider-verse.jpg' },
+  'barbie': { t: 'Barbie', y: 2023, r: 'PG-13', len: '1h 54m', kind: 'film', g: ['Comedy', 'Fantasy', 'Adventure'], d: 'Greta Gerwig', c: 'Margot Robbie, Ryan Gosling', s: 'Barbie leaves the perfection of Barbie Land for the real world — and discovers what it really means to be human.', img: 'assets/barbie.jpg' },
+  'past-lives': { t: 'Past Lives', y: 2023, r: 'PG-13', len: '1h 45m', kind: 'film', g: ['Romance', 'Drama'], d: 'Celine Song', c: 'Greta Lee, Teo Yoo', s: 'Two childhood friends reunite in New York twenty-four years later, and weigh the life they share against the one they imagined.', img: 'assets/past-lives.jpg' },
+  'top-gun': { t: 'Top Gun: Maverick', y: 2022, r: 'PG-13', len: '2h 11m', kind: 'film', g: ['Action', 'Drama'], d: 'Joseph Kosinski', c: 'Tom Cruise, Miles Teller', s: 'Maverick returns to train an elite squad of graduates for a mission that demands the ultimate sacrifice.', img: 'assets/top-gun.jpg' },
+  'interstellar': { t: 'Interstellar', y: 2014, r: 'PG-13', len: '2h 49m', kind: 'film', g: ['Sci-Fi', 'Adventure', 'Drama'], d: 'Christopher Nolan', c: 'Matthew McConaughey, Anne Hathaway', s: 'As Earth withers, a former pilot leads an expedition through a wormhole to find humanity a new home among the stars.', img: 'assets/interstellar.jpg' },
+  'parasite': { t: 'Parasite', y: 2019, r: 'R', len: '2h 12m', kind: 'film', g: ['Thriller', 'Drama', 'Comedy'], d: 'Bong Joon Ho', c: 'Song Kang-ho, Lee Sun-kyun', s: 'A poor family schemes their way into the household of a wealthy one — until an unexpected visit upends everything.', img: 'assets/parasite.jpg' },
+  'get-out': { t: 'Get Out', y: 2017, r: 'R', len: '1h 44m', kind: 'film', g: ['Horror', 'Thriller', 'Mystery'], d: 'Jordan Peele', c: 'Daniel Kaluuya, Allison Williams', s: 'A weekend at his girlfriend’s family estate turns sinister as a young photographer uncovers a disturbing secret.', img: 'assets/get-out.jpg' },
+  'joker': { t: 'Joker', y: 2019, r: 'R', len: '2h 2m', kind: 'film', g: ['Drama', 'Thriller', 'Crime'], d: 'Todd Phillips', c: 'Joaquin Phoenix, Robert De Niro', s: 'A failed stand-up comedian drifts through a decaying city — and his slow unraveling ignites something he never intended.', img: 'assets/joker.jpg' },
+  'blade-runner-2049': { t: 'Blade Runner 2049', y: 2017, r: 'R', len: '2h 43m', kind: 'film', g: ['Sci-Fi', 'Thriller', 'Drama'], d: 'Denis Villeneuve', c: 'Ryan Gosling, Harrison Ford', s: 'A replicant blade runner uncovers a buried secret that leads him to Rick Deckard, missing for thirty years.', img: 'assets/blade-runner-2049.jpg' },
+  'la-la-land': { t: 'La La Land', y: 2016, r: 'PG-13', len: '2h 8m', kind: 'film', g: ['Musical', 'Romance', 'Drama'], d: 'Damien Chazelle', c: 'Ryan Gosling, Emma Stone', s: 'A jazz pianist and an aspiring actress fall in love in Los Angeles — while their dreams pull them apart.', img: 'assets/la-la-land.jpg' },
+  'arrival': { t: 'Arrival', y: 2016, r: 'PG-13', len: '1h 56m', kind: 'film', g: ['Sci-Fi', 'Drama', 'Mystery'], d: 'Denis Villeneuve', c: 'Amy Adams, Jeremy Renner', s: 'A linguist is recruited to decipher an alien language — and learning how they speak changes how she lives.', img: 'assets/arrival.jpg' },
+  'knives-out': { t: 'Knives Out', y: 2019, r: 'PG-13', len: '2h 10m', kind: 'film', g: ['Mystery', 'Comedy', 'Drama'], d: 'Rian Johnson', c: 'Daniel Craig, Ana de Armas', s: 'A private detective investigates the death of a wealthy novelist whose eccentric family all had reasons to kill.', img: 'assets/knives-out.jpg' },
+};
+const RAILS_HOME = [
+  { name: 'Continue Watching', items: [{ id: 'shogun', p: .72 }, { id: 'chernobyl', p: .45 }, { id: 'interstellar', p: .88 }, { id: 'get-out', p: .3 }, { id: 'parasite', p: .6 }, { id: 'knives-out', p: .17 }] },
+  { name: 'Trending Now', items: [{ id: 'dune-two' }, { id: 'barbie' }, { id: 'joker' }, { id: 'spider-verse' }, { id: 'past-lives' }, { id: 'everything-everywhere' }, { id: 'top-gun' }] },
+  { name: 'Award Winners', items: [{ id: 'oppenheimer' }, { id: 'parasite' }, { id: 'la-la-land' }, { id: 'chernobyl' }, { id: 'shogun' }, { id: 'joker' }] },
+  { name: 'Critically Acclaimed', items: [{ id: 'past-lives' }, { id: 'get-out' }, { id: 'arrival' }, { id: 'blade-runner-2049' }, { id: 'knives-out' }, { id: 'interstellar' }] },
+];
+const FEATURED = ['dune-two', 'shogun', 'oppenheimer'];
+const ICO = {
+  play: '<svg class="od-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>',
+  check: '<svg class="od-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg>',
+  list: '<svg class="od-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h9"/></svg>',
+};
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const motionOK = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+const app = $('#app');
+const state = {
+  tab: 'home', watch: new Set(['la-la-land']), profile: 'Sam',
+  heroIdx: 0, heroTimer: null, playTimer: null, toastTimer: null,
+  detailFor: null, detailReturn: null, playerReturn: null, p: 0,
+};
+const ICON_PLAY = '<svg class="od-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>';
+
+function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+function metaChips(t) {
+  return `<span class="chip chip-line od-nowrap">${t.r}</span><span class="chip od-nowrap">${t.y}</span><span class="chip od-nowrap">${t.len}</span>`
+    + t.g.map((g) => `<span class="chip">${esc(g)}</span>`).join('');
+}
+function cardHTML(id, opts = {}) {
+  const t = T[id];
+  const [w, h] = DIMS[id] || [300, 450];
+  const cls = ['card', opts.progress != null ? 'card--progress' : ''].filter(Boolean).join(' ');
+  return `<button class="${cls}" data-focusable data-id="${id}" aria-label="${esc(t.t)} — ${esc(t.g.join(', '))}">
+    <span class="card-art">
+      <img class="od-media od-media-cover" style="--od-ratio:2/3" src="${t.img}" width="${w}" height="${h}" alt="Poster of ${esc(t.t)}" loading="lazy">
+      <span class="card-shade" aria-hidden="true"></span>
+      <span class="card-flag" aria-hidden="true">${ICO.check}</span>
+      <span class="card-name">${esc(t.t)}</span>
+      ${opts.progress != null ? `<span class="card-progress" aria-hidden="true" style="--p:${opts.progress}"><span></span></span>` : ''}
+    </span>
+  </button>`;
+}
+function syncFlags(scope = document) {
+  $$('.card', scope).forEach((c) => c.classList.toggle('card--in-list', state.watch.has(c.dataset.id)));
+}
+function syncListBtn(btn, id) {
+  const on = state.watch.has(id);
+  btn.classList.toggle('on', on);
+  btn.innerHTML = (on ? ICO.check : '<svg class="od-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>')
+    + `<span>${on ? 'In My List' : 'Watchlist'}</span>`;
+}
+function renderRails() {
+  let rails;
+  if (state.tab === 'mylist') {
+    const ids = [...state.watch];
+    rails = ids.length ? [{ name: 'My List', items: ids.map((id) => ({ id })), mine: true }] : [];
+  } else {
+    const kind = { movies: 'film', shows: 'series' }[state.tab] || null;
+    rails = RAILS_HOME
+      .map((r) => ({ ...r, items: kind ? r.items.filter((it) => T[it.id].kind === kind) : r.items }))
+      .filter((r) => kind ? r.items.length : true);
+  }
+  const zone = $('#rails');
+  if (!rails.length) {
+    zone.innerHTML = `<div class="empty"><div class="empty-glyph">${ICO.list}</div><h2>Nothing in My List yet</h2><p>Press the <strong>Watchlist</strong> button on any title, and it will be waiting for you right here.</p></div>`;
+    return;
+  }
+  zone.innerHTML = rails.map((r) => `<section class="rail"><h2>${r.name}</h2><div class="od-rail rail-track">${r.items.map((it) => cardHTML(it.id, { progress: it.p })).join('')}</div></section>`).join('');
+  syncFlags();
+}
+function renderHero(i) {
+  const id = FEATURED[i];
+  const t = T[id];
+  $('#heroBg').src = t.img;
+  const art = $('#heroArt');
+  art.src = t.img;
+  art.alt = `Poster of ${t.t}`;
+  $('#heroTitle').textContent = t.t;
+  $('#heroMeta').innerHTML = metaChips(t);
+  $('#heroSyn').textContent = t.s;
+  $('#heroPlay').dataset.id = id;
+  syncListBtn($('#heroList'), id);
+  $('#heroList').dataset.id = id;
+  $$('#heroDots span').forEach((d, k) => d.classList.toggle('on', k === i));
+  const hero = $('#hero');
+  hero.classList.remove('swap');
+  void hero.offsetWidth;
+  hero.classList.add('swap');
+}
+function startHero() {
+  if (!motionOK) return;
+  clearInterval(state.heroTimer);
+  state.heroTimer = setInterval(() => {
+    if (document.hidden) return;
+    if ($('#detail').classList.contains('on') || $('#search').classList.contains('on') || $('#player').classList.contains('on')) return;
+    if ($('#hero').contains(document.activeElement)) return;
+    renderHero((state.heroIdx + 1) % FEATURED.length);
+    state.heroIdx = (state.heroIdx + 1) % FEATURED.length;
+  }, 8000);
+}
+function showToast(msg) {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('on');
+  clearTimeout(state.toastTimer);
+  state.toastTimer = setTimeout(() => t.classList.remove('on'), 2400);
+}
+function toggleWatch(id, srcBtn) {
+  const added = !state.watch.has(id);
+  if (added) state.watch.add(id); else state.watch.delete(id);
+  syncFlags();
+  if (srcBtn) syncListBtn(srcBtn, id);
+  if (state.tab === 'mylist') renderRails();
+  showToast(added ? 'Added to My List' : 'Removed from My List');
+}
+function switchTab(tab) {
+  state.tab = tab;
+  $$('.nav-item').forEach((n) => {
+    if (n.dataset.tab === tab) n.setAttribute('aria-current', 'page'); else n.removeAttribute('aria-current');
+  });
+  renderRails();
+}
+
+const detail = $('#detail'), search = $('#search'), player = $('#player'), pmenu = $('#pmenu');
+function openDetail(id, returnEl) {
+  state.detailFor = id;
+  state.detailReturn = returnEl || document.activeElement;
+  const t = T[id];
+  $('#dBg').src = t.img;
+  const p = $('#dPoster');
+  p.src = t.img;
+  p.alt = `Poster of ${t.t}`;
+  $('#dTitle').textContent = t.t;
+  $('#dMeta').innerHTML = metaChips(t);
+  $('#dSyn').textContent = t.s;
+  $('#dCredits').innerHTML = `<b>Starring</b> ${esc(t.c)} &nbsp;·&nbsp; <b>${t.kind === 'series' ? 'Created by' : 'Directed by'}</b> ${esc(t.d)}`;
+  $('#dPlay').querySelector('span').textContent = t.kind === 'series' ? 'Play S1 E1' : 'Play';
+  $('#dPlay').dataset.id = id;
+  syncListBtn($('#dList'), id);
+  $('#dList').dataset.id = id;
+  detail.hidden = false;
+  requestAnimationFrame(() => detail.classList.add('on'));
+  app.inert = true;
+  $('#dPlay').focus();
+}
+function closeDetail() {
+  detail.classList.remove('on');
+  app.inert = false;
+  setTimeout(() => {
+    detail.hidden = true;
+    (state.detailReturn || document.body).focus?.();
+  }, 160);
+}
+function renderResults(q) {
+  const query = q.trim().toLowerCase();
+  const ids = Object.keys(T).filter((id) => !query || T[id].t.toLowerCase().includes(query) || T[id].g.some((g) => g.toLowerCase().includes(query)) || T[id].d.toLowerCase().includes(query) || T[id].c.toLowerCase().includes(query));
+  $('#qHint').textContent = query ? `${ids.length} result${ids.length === 1 ? '' : 's'} for “${q.trim()}”` : 'All titles';
+  $('#qGrid').innerHTML = ids.length
+    ? ids.map((id) => cardHTML(id)).join('')
+    : `<p class="search-empty">No matches for “${esc(q.trim())}”. Try a title, genre or cast name.</p>`;
+  syncFlags();
+}
+function openSearch() {
+  search.hidden = false;
+  requestAnimationFrame(() => search.classList.add('on'));
+  app.inert = true;
+  renderResults('');
+  const input = $('#q');
+  input.value = '';
+  input.focus();
+}
+function closeSearch() {
+  search.classList.remove('on');
+  setTimeout(() => { search.hidden = true; }, 180);
+  app.inert = false;
+}
+function openPlayer(id) {
+  state.playerReturn = document.activeElement;
+  state.p = 0;
+  $('#pTitle').textContent = T[id].t;
+  $('#pFill').style.width = '0%';
+  player.hidden = false;
+  requestAnimationFrame(() => player.classList.add('on'));
+  $('#pExit').focus();
+  clearInterval(state.playTimer);
+  state.playTimer = setInterval(() => {
+    state.p = Math.min(100, state.p + 0.5);
+    $('#pFill').style.width = state.p + '%';
+    if (state.p >= 100) clearInterval(state.playTimer);
+  }, 350);
+}
+function closePlayer() {
+  clearInterval(state.playTimer);
+  player.classList.remove('on');
+  setTimeout(() => { player.hidden = true; }, 180);
+  (state.playerReturn || document.body).focus?.();
+}
+function openMenu() {
+  pmenu.hidden = false;
+  $('#profileBtn').setAttribute('aria-expanded', 'true');
+  $$('#pmenu [data-profile]').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.profile === state.profile)));
+  $$('#pmenu [data-profile]')[0].focus();
+}
+function closeMenu() {
+  pmenu.hidden = true;
+  $('#profileBtn').setAttribute('aria-expanded', 'false');
+  $('#profileBtn').focus();
+}
+
+function currentScope() {
+  if (!player.hidden && player.classList.contains('on')) return { list: [$('#pExit')], name: 'player' };
+  if (!detail.hidden && detail.classList.contains('on')) return { list: null, name: 'detail' };
+  if (!pmenu.hidden) return { list: null, name: 'menu' };
+  if (!search.hidden && search.classList.contains('on')) return { list: null, name: 'search' };
+  return { list: null, name: 'main' };
+}
+function visibleFocusables() {
+  const { name } = currentScope();
+  if (name === 'player') return [$('#pExit')];
+  let root = document;
+  if (name === 'search') root = search;
+  else if (name === 'menu') root = pmenu;
+  else if (name === 'detail') root = detail;
+  return $$('[data-focusable]', root).filter((el) => el.checkVisibility ? el.checkVisibility({ checkVisibilityCSS: true }) : true);
+}
+function move(dir) {
+  const list = visibleFocusables();
+  if (!list.length) return;
+  const cur = document.activeElement;
+  if (!list.includes(cur)) { (list.find((el) => !el.classList.contains('nav-item')) || list[0]).focus(); return; }
+  const dirs = { left: [-1, 0], right: [1, 0], up: [0, -1], down: [0, 1] };
+  const [dx, dy] = dirs[dir];
+  const r = cur.getBoundingClientRect();
+  const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  let best = null, bestScore = Infinity;
+  for (const el of list) {
+    if (el === cur) continue;
+    const b = el.getBoundingClientRect();
+    const ex = b.left + b.width / 2, ey = b.top + b.height / 2;
+    const px = ex - cx, py = ey - cy;
+    const proj = px * dx + py * dy;
+    if (proj < 6) continue;
+    const cross = Math.abs(px * dy - py * dx);
+    if (cross > Math.max(44, proj * 1.4)) continue;
+    const score = proj + cross * 2.2;
+    if (score < bestScore) { bestScore = score; best = el; }
+  }
+  if (best) best.focus();
+}
+document.addEventListener('keydown', (e) => {
+  const { name } = currentScope();
+  if (e.key === 'Escape' || (e.key === 'Backspace' && !e.target.closest('input,textarea'))) {
+    if (name === 'player') { e.preventDefault(); closePlayer(); }
+    else if (name === 'search') { e.preventDefault(); closeSearch(); $('#searchBtn').focus(); }
+    else if (name === 'menu') { e.preventDefault(); closeMenu(); }
+    else if (name === 'detail') { e.preventDefault(); closeDetail(); }
+    return;
+  }
+  if (name === 'player') return;
+  const dirs = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' };
+  if (dirs[e.key]) { e.preventDefault(); move(dirs[e.key]); }
+  if (e.key === 'Enter' && name === 'search' && e.target.id === 'q') {
+    const first = $('#qGrid .card');
+    if (first) { e.preventDefault(); first.focus(); }
+  }
+});
+document.addEventListener('focusin', (e) => {
+  if (e.target.scrollIntoView) e.target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: motionOK ? 'smooth' : 'auto' });
+});
+
+$('#brandBtn').addEventListener('click', () => switchTab('home'));
+$$('.nav-item').forEach((n) => n.addEventListener('click', () => switchTab(n.dataset.tab)));
+$('#heroPlay').addEventListener('click', (e) => openPlayer(e.currentTarget.dataset.id));
+$('#heroList').addEventListener('click', (e) => toggleWatch(e.currentTarget.dataset.id, e.currentTarget));
+$('#rails').addEventListener('click', (e) => {
+  const card = e.target.closest('.card');
+  if (card) openDetail(card.dataset.id, card);
+});
+$('#dClose').addEventListener('click', closeDetail);
+$('#dPlay').addEventListener('click', (e) => openPlayer(e.currentTarget.dataset.id));
+$('#dList').addEventListener('click', (e) => toggleWatch(e.currentTarget.dataset.id, e.currentTarget));
+$('#searchBtn').addEventListener('click', openSearch);
+$('#qClose').addEventListener('click', () => { closeSearch(); $('#searchBtn').focus(); });
+$('#q').addEventListener('input', (e) => renderResults(e.target.value));
+$('#qGrid').addEventListener('click', (e) => {
+  const card = e.target.closest('.card');
+  if (card) openDetail(card.dataset.id, $('#searchBtn'));
+});
+$('#pExit').addEventListener('click', closePlayer);
+player.addEventListener('click', (e) => { if (e.target === player) closePlayer(); });
+$('#profileBtn').addEventListener('click', () => { pmenu.hidden ? openMenu() : closeMenu(); });
+$$('#pmenu [data-profile]').forEach((b) => b.addEventListener('click', () => {
+  state.profile = b.dataset.profile;
+  $('#avatarInitials').textContent = state.profile[0];
+  $$('#pmenu [data-profile]').forEach((x) => x.setAttribute('aria-checked', String(x === b)));
+  showToast(`Watching as ${state.profile}`);
+  closeMenu();
+}));
+document.addEventListener('pointerdown', (e) => {
+  if (!pmenu.hidden && !pmenu.contains(e.target) && e.target !== $('#profileBtn') && !$('#profileBtn').contains(e.target)) {
+    pmenu.hidden = true;
+    $('#profileBtn').setAttribute('aria-expanded', 'false');
+  }
+}, true);
+
+renderHero(0);
+startHero();
+renderRails();
+$('#navHome').focus();
+</script>
+</body>
+</html>
