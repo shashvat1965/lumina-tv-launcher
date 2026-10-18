@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Run a shell command on the TV as root via Homebrew Channel's telnet service."""
+import os
 import socket
 import sys
 import time
 
-HOST = "192.168.0.10"
+HOST = os.environ.get("TV_IP") or "192.168.0.10"
 PORT = 23
 
 

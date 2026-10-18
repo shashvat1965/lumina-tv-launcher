@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.expanduser("~/slopbro"))
 os.chdir(os.path.expanduser("~/slopbro"))
 import slopbro as sb  # noqa: E402
 
-HOST = "192.168.0.10"
+HOST = os.environ.get("TV_IP") or "192.168.0.10"
 
 
 def connect():

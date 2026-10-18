@@ -6,9 +6,10 @@ import os
 import subprocess
 import time
 
-BASE = os.environ.get("TVWEB", "http://192.168.0.10:8081")
+TV_IP = os.environ.get("TV_IP") or "192.168.0.10"
+BASE = os.environ.get("TVWEB", "http://%s:8081" % TV_IP)
 KEY = os.path.expanduser("~/.ssh/webos_tv")
-TV = "root@192.168.0.10"
+TV = "root@%s" % TV_IP
 
 
 def curl(path, body=None, timeout="30"):
